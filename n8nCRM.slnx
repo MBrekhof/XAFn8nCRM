@@ -1,0 +1,9 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="EasyTest" />
+    <BuildType Name="Release" />
+  </Configurations>
+  <Project Path="n8nCRM/n8nCRM.Blazor.Server/n8nCRM.Blazor.Server.csproj" />
+  <Project Path="n8nCRM/n8nCRM.Module/n8nCRM.Module.csproj" />
+</Solution>
