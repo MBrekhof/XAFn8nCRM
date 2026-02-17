@@ -25,6 +25,10 @@ namespace n8nCRM.Module.BusinessObjects
         public DbSet<DashboardData> DashboardData { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<HCategory> HCategories { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

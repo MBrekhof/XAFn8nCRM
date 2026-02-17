@@ -42,6 +42,10 @@ namespace n8nCRM.Module
             AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.EF.Event));
             AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.EF.Resource));
             AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.EF.HCategory));
+            AdditionalExportedTypes.Add(typeof(n8nCRM.Module.BusinessObjects.Customer));
+            AdditionalExportedTypes.Add(typeof(n8nCRM.Module.BusinessObjects.Order));
+            AdditionalExportedTypes.Add(typeof(n8nCRM.Module.BusinessObjects.OrderItem));
+            AdditionalExportedTypes.Add(typeof(n8nCRM.Module.BusinessObjects.Invoice));
         }
         public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB)
         {

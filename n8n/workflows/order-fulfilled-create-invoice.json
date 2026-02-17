@@ -1,0 +1,145 @@
+{
+  "name": "Order Fulfilled - Create Invoice",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "order-fulfilled",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a1b2c3d4-1111-4aaa-bbbb-000000000001",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "order-fulfilled"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://xafapp:8080/api/Authentication/Authenticate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"userName\":\"Admin\",\"password\":\"\"}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": false,
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "id": "a1b2c3d4-1111-4aaa-bbbb-000000000002",
+      "name": "Authenticate",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the authentication token from the Authenticate node\nconst tokenRaw = $('Authenticate').first().json.data || $('Authenticate').first().json;\nlet token = typeof tokenRaw === 'string' ? tokenRaw : JSON.stringify(tokenRaw);\n\n// Strip surrounding quotes if present\ntoken = token.replace(/^\"|\"$/g, '');\n\n// Get webhook payload\nconst webhookData = $('Webhook').first().json.body;\nconst orderId = webhookData.OrderId;\nconst orderNumber = webhookData.OrderNumber;\nconst totalAmount = webhookData.TotalAmount;\n\n// Build invoice payload\nconst invoicePayload = {\n  InvoiceNumber: 'INV-' + orderId.substring(0, 8),\n  InvoiceDate: new Date().toISOString(),\n  Status: 'Draft',\n  TotalAmount: totalAmount,\n  Notes: 'Auto-generated from order ' + orderNumber,\n  'Order@odata.bind': 'Order(' + orderId + ')'\n};\n\nreturn [{\n  json: {\n    token: token,\n    invoicePayload: invoicePayload\n  }\n}];"
+      },
+      "id": "a1b2c3d4-1111-4aaa-bbbb-000000000003",
+      "name": "Prepare Invoice Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://xafapp:8080/api/odata/Invoice",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.invoicePayload) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": false,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "a1b2c3d4-1111-4aaa-bbbb-000000000004",
+      "name": "Create Invoice",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Invoice created successfully\",\n  \"invoice\": {{ JSON.stringify($json) }}\n}",
+        "options": {}
+      },
+      "id": "a1b2c3d4-1111-4aaa-bbbb-000000000005",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Authenticate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Authenticate": {
+      "main": [
+        [
+          {
+            "node": "Prepare Invoice Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Invoice Data": {
+      "main": [
+        [
+          {
+            "node": "Create Invoice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Invoice": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

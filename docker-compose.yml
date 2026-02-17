@@ -1,0 +1,40 @@
+services:
+  xafapp:
+    build:
+      context: .
+      dockerfile: n8nCRM/n8nCRM.Blazor.Server/Dockerfile
+      args:
+        DEVEXPRESS_NUGET_URL: ${DEVEXPRESS_NUGET_URL}
+    ports:
+      - "5000:8080"
+    volumes:
+      - sqlite-data:/app/data
+    environment:
+      - ConnectionStrings__ConnectionString=EFCoreProvider=SQLite;Data Source=/app/data/n8nCRM
+      - Webhooks__OrderFulfilled=http://n8n:5678/webhook/order-fulfilled
+    networks:
+      - crm-network
+    restart: unless-stopped
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n-data:/home/node/.n8n
+    environment:
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://n8n:5678/
+    networks:
+      - crm-network
+    restart: unless-stopped
+
+volumes:
+  sqlite-data:
+  n8n-data:
+
+networks:
+  crm-network:
+    driver: bridge

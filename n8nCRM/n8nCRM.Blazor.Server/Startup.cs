@@ -49,8 +49,10 @@ namespace n8nCRM.Blazor.Server
                 {
                     webApiBuilder.ConfigureOptions(options =>
                     {
-                        // Make your business objects available in the Web API and generate the GET, POST, PUT, and DELETE HTTP methods for it.
-                        // options.BusinessObject<YourBusinessObject>();
+                        options.BusinessObject<n8nCRM.Module.BusinessObjects.Customer>();
+                        options.BusinessObject<n8nCRM.Module.BusinessObjects.Order>();
+                        options.BusinessObject<n8nCRM.Module.BusinessObjects.OrderItem>();
+                        options.BusinessObject<n8nCRM.Module.BusinessObjects.Invoice>();
                     });
                 });
 

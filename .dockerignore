@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+.vs/
+.git/
+*.db
+*.sqlite
+node_modules/
+.idea/
+**/*.user
+n8n-data/
