@@ -10,14 +10,13 @@ RUN dotnet nuget add source "$DEVEXPRESS_NUGET_URL" -n DevExpress
 
 WORKDIR /src
 
-# Copy solution file, central package management, and project files first (layer caching)
-COPY n8nCRM.slnx ./
+# Copy central package management and project files first (layer caching)
 COPY n8nCRM/Directory.packages.props n8nCRM/Directory.packages.props
 COPY n8nCRM/n8nCRM.Module/n8nCRM.Module.csproj n8nCRM/n8nCRM.Module/
 COPY n8nCRM/n8nCRM.Blazor.Server/n8nCRM.Blazor.Server.csproj n8nCRM/n8nCRM.Blazor.Server/
 
 # Restore dependencies
-RUN dotnet restore
+RUN dotnet restore n8nCRM/n8nCRM.Blazor.Server/n8nCRM.Blazor.Server.csproj
 
 # Copy everything else
 COPY . .
