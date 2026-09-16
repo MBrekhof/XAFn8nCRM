@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Deterministic>false</Deterministic>
     <AssemblyVersion>1.0.*</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
@@ -30,9 +29,9 @@
     <PackageReference Include="DevExpress.ExpressApp.Scheduler.Blazor" Version="26.1.4" />
     <PackageReference Include="DevExpress.ExpressApp.Validation" Version="26.1.4" />
     <PackageReference Include="DevExpress.ExpressApp.Validation.Blazor" Version="26.1.4" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="10.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.31" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="9.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.12" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\n8nCRM.Module\n8nCRM.Module.csproj" />
