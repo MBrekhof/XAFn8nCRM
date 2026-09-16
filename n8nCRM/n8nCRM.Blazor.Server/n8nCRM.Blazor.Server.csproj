@@ -17,22 +17,22 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.Drawing.Skia" Version="25.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Api.EFCore.All" Version="25.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Blazor" Version="25.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="25.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Dashboards.Blazor" Version="25.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.FileAttachment.Blazor" Version="25.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Notifications.Blazor" Version="25.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Office.Blazor" Version="25.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="25.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.ReportsV2.Blazor" Version="25.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Scheduler.Blazor" Version="25.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Validation" Version="25.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Validation.Blazor" Version="25.2.4" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.9.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.18" />
+    <PackageReference Include="DevExpress.Drawing.Skia" Version="26.1.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Api.EFCore.All" Version="26.1.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Blazor" Version="26.1.4" />
+    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="26.1.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Dashboards.Blazor" Version="26.1.4" />
+    <PackageReference Include="DevExpress.ExpressApp.FileAttachment.Blazor" Version="26.1.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Notifications.Blazor" Version="26.1.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Office.Blazor" Version="26.1.4" />
+    <PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="26.1.4" />
+    <PackageReference Include="DevExpress.ExpressApp.ReportsV2.Blazor" Version="26.1.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Scheduler.Blazor" Version="26.1.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Validation" Version="26.1.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Validation.Blazor" Version="26.1.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="10.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.31" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\n8nCRM.Module\n8nCRM.Module.csproj" />

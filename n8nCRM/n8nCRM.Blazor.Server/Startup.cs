@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using n8nCRM.Blazor.Server.Services;
 using n8nCRM.WebApi.JWT;
 using System.Text;
@@ -192,16 +192,8 @@ namespace n8nCRM.Blazor.Server
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header
                 });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement() {
-                    {
-                        new OpenApiSecurityScheme() {
-                            Reference = new OpenApiReference() {
-                                Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
-                                Id = "JWT"
-                            }
-                        },
-                        new string[0]
-                    },
+                c.AddSecurityRequirement(doc => new OpenApiSecurityRequirement() {
+                    { new OpenApiSecuritySchemeReference("JWT", doc), new List<string>() },
                 });
             });
 
