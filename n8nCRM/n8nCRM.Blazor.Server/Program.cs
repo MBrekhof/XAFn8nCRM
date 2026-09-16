@@ -31,6 +31,11 @@ namespace n8nCRM.Blazor.Server
             else
             {
                 DevExpress.ExpressApp.FrameworkSettings.DefaultSettingsCompatibilityMode = DevExpress.ExpressApp.FrameworkSettingsCompatibilityMode.Latest;
+                // v26.1 switched password hashing to SHA512/600K and stops verifying the old SHA1/20K hashes.
+                // Keep both enabled so existing users still log in; new passwords get SHA512.
+                // https://docs.devexpress.com/eXpressAppFramework/112649#changes-in-password-encryption-in-v261
+                DevExpress.Persistent.Base.PasswordCryptographer.UseSHA1_20K = true;
+                DevExpress.Persistent.Base.PasswordCryptographer.UseSHA512_600K = true;
                 DevExpress.ExpressApp.Security.SecurityStrategy.AutoAssociationReferencePropertyMode = DevExpress.ExpressApp.Security.ReferenceWithoutAssociationPermissionsMode.AllMembers;
                 IHost host = CreateHostBuilder(args).Build();
                 if (ContainsArgument(args, "updateDatabase"))

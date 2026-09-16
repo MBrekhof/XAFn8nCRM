@@ -1,5 +1,6 @@
-#nullable enable
+﻿#nullable enable
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl.EF;
 using DevExpress.Persistent.Validation;
@@ -21,6 +22,11 @@ public class Invoice : BaseObject
 
     public virtual string? Notes { get; set; }
 
+    public virtual Guid? OrderID { get; set; }
+
+    // Explicit FK: Invoice is the dependent side of the Order <-> Invoice one-to-one.
+    // EF Core 10 no longer infers it when both navigations are optional.
     [RuleRequiredField]
+    [ForeignKey(nameof(OrderID))]
     public virtual Order? Order { get; set; }
 }

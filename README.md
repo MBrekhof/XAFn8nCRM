@@ -50,8 +50,8 @@ A proof-of-concept integrating [DevExpress XAF](https://www.devexpress.com/produ
 
 | Component | Technology |
 |-----------|-----------|
-| CRM Application | DevExpress XAF Blazor Server (.NET 8.0) |
-| Database | SQLite (EF Core) |
+| CRM Application | DevExpress XAF Blazor Server 26.1 (.NET 10.0) |
+| Database | SQLite (EF Core 10) |
 | API | OData v4.01 with JWT authentication |
 | Workflow Engine | n8n (community edition) |
 | Containerization | Docker + Docker Compose |
@@ -59,7 +59,7 @@ A proof-of-concept integrating [DevExpress XAF](https://www.devexpress.com/produ
 
 ## Prerequisites
 
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
 - [DevExpress NuGet feed](https://docs.devexpress.com/GeneralInformation/116042/installation/install-devexpress-controls-using-nuget-packages) configured with a valid license
 
@@ -68,6 +68,10 @@ A proof-of-concept integrating [DevExpress XAF](https://www.devexpress.com/produ
 ### Local Development
 
 ```bash
+# First run only: create/update the SQLite database (the app only does this
+# automatically when a debugger is attached)
+dotnet run --project n8nCRM/n8nCRM.Blazor.Server/n8nCRM.Blazor.Server.csproj -- -updateDatabase -silent
+
 # Build and run the XAF app
 dotnet run --project n8nCRM/n8nCRM.Blazor.Server/n8nCRM.Blazor.Server.csproj
 

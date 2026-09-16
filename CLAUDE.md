@@ -1,4 +1,6 @@
-# n8nCRM - Project Guide
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Overview
 
@@ -6,34 +8,14 @@ Proof-of-concept CRM integrating DevExpress XAF Blazor Server with n8n workflow 
 
 ## Tech Stack
 
-- **Framework:** DevExpress XAF Blazor Server (.NET 8.0)
-- **DevExpress Version:** 25.2.x (central package management via `Directory.packages.props`)
-- **Database:** SQLite via EF Core 8.0.18
+- **Framework:** DevExpress XAF Blazor Server (.NET 10.0)
+- **DevExpress Version:** 26.1.4 (explicit versions in .csproj — CPM is disabled)
+  - Swashbuckle.AspNetCore must stay on 9.x: DevExpress.ExpressApp.WebApi compiles against Microsoft.OpenApi 1.x, Swashbuckle 10 fails at startup
+  - Microsoft.CodeAnalysis.* is an exact pin from DevExpress.ExpressApp.EFCore (5.0.0 on net10.0)
+- **Database:** SQLite via EF Core 10.0.12
 - **API:** OData v4.01 + REST (JWT authenticated)
 - **Workflow Automation:** n8n (community edition, Docker)
 - **Containerization:** Docker + docker-compose
-
-## Project Structure
-
-```
-n8ncrm/
-├── CLAUDE.md
-├── n8nCRM.slnx                     # Solution file (XML format)
-├── .mcp.json                       # DevExpress docs MCP server config
-├── docker-compose.yml              # Orchestrates XAF app + n8n
-├── n8nCRM/
-│   ├── n8nCRM.Module/              # Shared module (business objects, logic)
-│   │   ├── BusinessObjects/        # EF Core entities + DbContext
-│   │   ├── DatabaseUpdate/         # Schema migration / seed data
-│   │   └── Module.cs               # XAF module registration
-│   └── n8nCRM.Blazor.Server/       # Blazor Server host
-│       ├── API/                    # Custom API controllers
-│       │   ├── Security/           # JWT auth controller
-│       │   └── Reports/            # Report endpoints
-│       ├── Startup.cs              # DI, OData, auth, modules
-│       ├── Program.cs              # Entry point
-│       └── Dockerfile              # Container build for XAF app
-```
 
 ## Build & Run
 
@@ -91,10 +73,17 @@ docker-compose up --build
 
 ### Docker
 
-- XAF app Dockerfile must configure DevExpress NuGet feed at build time
+- XAF app Dockerfile requires `DEVEXPRESS_NUGET_URL` build arg (stored in `.env`, git-ignored)
+- Dockerfile restores individual .csproj files (kept from the SDK 8 days; `.slnx` restore works on SDK 10)
 - n8n uses official `docker.n8n.io/n8nio/n8n` image
-- Services communicate over Docker internal network
-- SQLite DB file stored in a named volume
+- Services communicate over Docker internal network (`crm-network`)
+- SQLite DB file stored in a named volume (`sqlite-data` → `/app/data/`)
+
+## Git Workflow
+
+- Use feature branches: `feature/<name>`, `fix/<name>` — PR to master
+- Solution file: `n8nCRM.slnx` (XML format, requires SDK 9+ for `dotnet restore` at solution level)
+- First local run: `dotnet run --project n8nCRM/n8nCRM.Blazor.Server/n8nCRM.Blazor.Server.csproj -- -updateDatabase -silent` creates the SQLite DB; the app only updates the schema automatically with a debugger attached
 
 ## Default Users (Development)
 

@@ -48,3 +48,8 @@ n8n-data/
 
 # User secrets
 secrets.json
+
+# Local SQLite database (Data Source=n8nCRM)
+n8nCRM/n8nCRM.Blazor.Server/n8nCRM
+n8nCRM/n8nCRM.Blazor.Server/n8nCRM-shm
+n8nCRM/n8nCRM.Blazor.Server/n8nCRM-wal

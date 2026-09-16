@@ -1,7 +1,7 @@
 # =============================================================================
 # Build stage
 # =============================================================================
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 
 ARG DEVEXPRESS_NUGET_URL
 
@@ -27,7 +27,7 @@ RUN dotnet publish n8nCRM/n8nCRM.Blazor.Server/n8nCRM.Blazor.Server.csproj -c Re
 # =============================================================================
 # Runtime stage
 # =============================================================================
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 
 # Install libicu for globalization support
 RUN apt-get update && apt-get install -y libicu-dev && rm -rf /var/lib/apt/lists/*
